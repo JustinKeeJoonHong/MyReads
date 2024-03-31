@@ -1,6 +1,8 @@
 import "./App.css";
 import { useState, useEffect } from "react";
-import ListBookContent from "./ListBookContent";
+import CurrentlyReading from "./\bCurrentlyReading";
+import WantToRead from "./WantToRead";
+import Read from "./Read";
 import SearchBook from "./SearchBook";
 import * as BooksAPI from "/Users/hong-gijun/Desktop/MyReads/starter/src/BooksAPI";
 
@@ -24,14 +26,19 @@ function App() {
         <SearchBook
           showSearchPage={showSearchPage}
           setShowSearchpage={setShowSearchpage}
-          books={books}
         />
       ) : (
         <div className="list-books">
           <div className="list-books-title">
             <h1>MyReads</h1>
           </div>
-          <ListBookContent />
+          <div className="list-books-content">
+            <div>
+              <CurrentlyReading books={books} />
+              <WantToRead books={books} />
+              <Read books={books} />
+            </div>
+          </div>
           <div className="open-search">
             <a onClick={() => setShowSearchpage(!showSearchPage)}>Add a book</a>
           </div>
