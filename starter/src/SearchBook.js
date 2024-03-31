@@ -1,22 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import * as BooksAPI from "./BooksAPI";
 
 const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
-  const [query, SetQuery] = useState("");
+  const [query, setQuery] = useState("");
+  const [showingBooks, setShowingBooks] = useState([]);
 
-  const updateQuery = (query) => {
-    SetQuery(query.trim());
+  useEffect(() => {
+    let active = true;
+
+    if (query) {
+      BooksAPI.search(query, 20).then((books) => {
+        if (books.error) {
+          if (active) {
+            setShowingBooks([]);
+          }
+        } else {
+          if (active) {
+            setShowingBooks(books);
+          }
+        }
+      });
+    } else {
+      setShowingBooks(books);
+    }
+    // Cleanup function
+    return () => {
+      active = false;
+    };
+  }, [query, books]);
+
+  const updateQuery = (event) => {
+    const value = event.target.value;
+    setQuery(value);
   };
-
-  const showingBooks =
-    query === ""
-      ? books
-      : books.filter(
-          (book) =>
-            book.title.toLowerCase().includes(query.toLowerCase()) ||
-            book.authors.some((author) =>
-              author.toLowerCase().includes(query.toLowerCase())
-            )
-        );
 
   return (
     <div className="search-books">
@@ -33,7 +49,7 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
             type="text"
             placeholder="Search by title, author, or ISBN"
             value={query}
-            onChange={(event) => updateQuery(event.target.value)}
+            onChange={(event) => updateQuery(event)}
           />
         </div>
       </div>
