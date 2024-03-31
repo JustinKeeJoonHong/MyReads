@@ -1,4 +1,6 @@
-const SearchBook = () => {
+import { useState } from "react";
+
+const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
   return (
     <div className="search-books">
       <div className="search-books-bar">
