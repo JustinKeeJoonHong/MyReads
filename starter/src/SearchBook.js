@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
 
-const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
+const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
   const [query, setQuery] = useState("");
   const [showingBooks, setShowingBooks] = useState([]);
 
@@ -21,13 +21,13 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
         }
       });
     } else {
-      setShowingBooks(books);
+      setShowingBooks([]);
     }
     // Cleanup function
     return () => {
       active = false;
     };
-  }, [query, books]);
+  }, [query]);
 
   const updateQuery = (event) => {
     const value = event.target.value;
@@ -36,7 +36,6 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
 
   return (
     <div className="search-books">
-      {console.log(books)}
       <div className="search-books-bar">
         <a
           className="close-search"
@@ -64,7 +63,9 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
                     style={{
                       width: 128,
                       height: 193,
-                      backgroundImage: `url(${book.imageLinks.thumbnail})`,
+                      backgroundImage: `url(${
+                        book.imageLinks?.thumbnail || ""
+                      })`,
                     }}
                   ></div>
                   <div className="book-shelf-changer">
