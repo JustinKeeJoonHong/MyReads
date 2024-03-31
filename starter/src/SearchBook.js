@@ -56,6 +56,7 @@ const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
         <ol className="books-grid">
           {showingBooks.map((book) => (
             <li key={book.id}>
+              {console.log(showingBooks)}
               <div className="book">
                 <div className="book-top">
                   <div
