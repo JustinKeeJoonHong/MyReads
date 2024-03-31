@@ -1,6 +1,23 @@
 import { useState } from "react";
 
 const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
+  const [query, SetQuery] = useState("");
+
+  const updateQuery = (query) => {
+    SetQuery(query.trim());
+  };
+
+  const showingBooks =
+    query === ""
+      ? books
+      : books.filter(
+          (book) =>
+            book.title.toLowerCase().includes(query.toLowerCase()) ||
+            book.authors.some((author) =>
+              author.toLowerCase().includes(query.toLowerCase())
+            )
+        );
+
   return (
     <div className="search-books">
       {console.log(books)}
@@ -12,13 +29,18 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, books }) => {
           Close
         </a>
         <div className="search-books-input-wrapper">
-          <input type="text" placeholder="Search by title, author, or ISBN" />
+          <input
+            type="text"
+            placeholder="Search by title, author, or ISBN"
+            value={query}
+            onChange={(event) => updateQuery(event.target.value)}
+          />
         </div>
       </div>
       <div className="search-books-results">
         <ol className="books-grid">
-          {books.map((book) => (
-            <li>
+          {showingBooks.map((book) => (
+            <li key={book.id}>
               <div className="book">
                 <div className="book-top">
                   <div
