@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import ListBookContent from "./ListBookContent";
 import SearchBook from "./SearchBook";
-import * as BooksAPI from "../BooksAPI";
+import * as BooksAPI from "/Users/hong-gijun/Desktop/MyReads/starter/src/BooksAPI";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
@@ -24,6 +24,7 @@ function App() {
         <SearchBook
           showSearchPage={showSearchPage}
           setShowSearchpage={setShowSearchpage}
+          books={books}
         />
       ) : (
         <div className="list-books">
