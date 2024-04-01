@@ -1,7 +1,13 @@
 import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
+import BookShelfChanger from "./BookShelfChanger";
 
-const SearchBook = ({ showSearchPage, setShowSearchpage, updateShelf }) => {
+const SearchBook = ({
+  showSearchPage,
+  setShowSearchpage,
+  updateShelf,
+  books,
+}) => {
   const [query, setQuery] = useState("");
   const [showingBooks, setShowingBooks] = useState([]);
 
@@ -9,14 +15,21 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, updateShelf }) => {
     let active = true;
 
     if (query) {
-      BooksAPI.search(query, 20).then((books) => {
-        if (books.error) {
+      BooksAPI.search(query, 20).then((searchedBooks) => {
+        if (searchedBooks.error) {
           if (active) {
             setShowingBooks([]);
           }
         } else {
           if (active) {
-            setShowingBooks(books);
+            const updatedBooks = searchedBooks.map((searchedBook) => {
+              const existAtMyRead = books.find((b) => b.id === searchedBook.id);
+              return {
+                ...searchedBook,
+                ...(existAtMyRead && { shelf: existAtMyRead.shelf }),
+              };
+            });
+            setShowingBooks(updatedBooks);
           }
         }
       });
@@ -27,7 +40,7 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, updateShelf }) => {
     return () => {
       active = false;
     };
-  }, [query]);
+  }, [query, books]);
 
   const updateQuery = (event) => {
     const value = event.target.value;
@@ -68,23 +81,7 @@ const SearchBook = ({ showSearchPage, setShowSearchpage, updateShelf }) => {
                       })`,
                     }}
                   ></div>
-                  <div className="book-shelf-changer">
-                    <select
-                      onChange={(event) =>
-                        updateShelf(book, event.target.value)
-                      }
-                      value={book.shelf}
-                    >
-                      <option value="none" disabled>
-                        Add to..
-                      </option>
-                      <option value="currentlyReading">
-                        Currently Reading
-                      </option>
-                      <option value="wantToRead">Want to Read</option>
-                      <option value="read">Read</option>
-                    </select>
-                  </div>
+                  <BookShelfChanger book={book} updateShelf={updateShelf} />
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
