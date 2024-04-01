@@ -11,6 +11,19 @@ function App() {
 
   const [books, setBooks] = useState([]);
 
+  const updateShelf = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      setBooks(
+        books.map((b) => {
+          if (b.id === book.id) {
+            return { ...b, shelf: newShelf };
+          }
+          return b;
+        })
+      );
+    });
+  };
+
   useEffect(() => {
     const getBooks = async () => {
       const res = await BooksAPI.getAll();
@@ -34,9 +47,9 @@ function App() {
           </div>
           <div className="list-books-content">
             <div>
-              <CurrentlyReading books={books} />
-              <WantToRead books={books} />
-              <Read books={books} />
+              <CurrentlyReading books={books} updateShelf={updateShelf} />
+              <WantToRead books={books} updateShelf={updateShelf} />
+              <Read books={books} updateShelf={updateShelf} />
             </div>
           </div>
           <div className="open-search">
