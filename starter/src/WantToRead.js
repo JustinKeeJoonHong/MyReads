@@ -2,7 +2,6 @@ import BookShelfChanger from "./BookShelfChanger";
 
 const WantToRead = ({ books, updateShelf }) => {
   return (
-    // wantToRead
     <div className="bookshelf">
       <h2 className="bookshelf-title">Want to Read</h2>
       <div className="bookshelf-books">

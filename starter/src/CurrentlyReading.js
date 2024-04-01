@@ -2,7 +2,6 @@ import { update } from "./BooksAPI";
 import BookShelfChanger from "./BookShelfChanger";
 
 const CurrentlyReading = ({ books, updateShelf }) => {
-  // currentlyReading
   return (
     <div className="bookshelf">
       {console.log(books)}

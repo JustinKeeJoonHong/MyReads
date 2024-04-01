@@ -13,7 +13,6 @@ function App() {
 
   const updateShelf = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(() => {
-      // 서재의 books 상태 업데이트
       const newBooksState = books.map((b) => {
         if (b.id === book.id) {
           return { ...b, shelf: newShelf };
