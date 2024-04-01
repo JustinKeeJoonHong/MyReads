@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import * as BooksAPI from "./BooksAPI";
 
-const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
+const SearchBook = ({ showSearchPage, setShowSearchpage, updateShelf }) => {
   const [query, setQuery] = useState("");
   const [showingBooks, setShowingBooks] = useState([]);
 
@@ -56,7 +56,6 @@ const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
         <ol className="books-grid">
           {showingBooks.map((book) => (
             <li key={book.id}>
-              {console.log(showingBooks)}
               <div className="book">
                 <div className="book-top">
                   <div
@@ -70,7 +69,12 @@ const SearchBook = ({ showSearchPage, setShowSearchpage }) => {
                     }}
                   ></div>
                   <div className="book-shelf-changer">
-                    <select>
+                    <select
+                      onChange={(event) =>
+                        updateShelf(book, event.target.value)
+                      }
+                      value={book.shelf}
+                    >
                       <option value="none" disabled>
                         Move to...
                       </option>

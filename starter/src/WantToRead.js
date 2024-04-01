@@ -1,4 +1,4 @@
-const WantToRead = ({ books }) => {
+const WantToRead = ({ books, updateShelf }) => {
   return (
     // wantToRead
     <div className="bookshelf">
@@ -22,7 +22,12 @@ const WantToRead = ({ books }) => {
                       }}
                     ></div>
                     <div className="book-shelf-changer">
-                      <select>
+                      <select
+                        onChange={(event) =>
+                          updateShelf(book, event.target.value)
+                        }
+                        value={book.shelf}
+                      >
                         <option value="none" disabled>
                           Move to...
                         </option>

@@ -39,6 +39,7 @@ function App() {
         <SearchBook
           showSearchPage={showSearchPage}
           setShowSearchpage={setShowSearchpage}
+          updateShelf={updateShelf}
         />
       ) : (
         <div className="list-books">
