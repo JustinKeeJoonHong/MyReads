@@ -6,6 +6,7 @@ const SearchBook = ({
   showSearchPage,
   setShowSearchpage,
   updateShelf,
+  setBooks,
   books,
 }) => {
   const [query, setQuery] = useState("");
@@ -20,6 +21,20 @@ const SearchBook = ({
         return b;
       });
       setShowingBooks(newShowingBooks);
+
+      const existsInBooks = books.some((b) => b.id === book.id);
+      let newBooks;
+      if (existsInBooks) {
+        newBooks = books.map((b) => {
+          if (b.id === book.id) {
+            return { ...b, shelf: newShelf };
+          }
+          return b;
+        });
+      } else {
+        newBooks = [...books, { ...book, shelf: newShelf }];
+      }
+      setBooks(newBooks);
     });
   };
 

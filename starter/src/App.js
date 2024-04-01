@@ -13,14 +13,14 @@ function App() {
 
   const updateShelf = (book, newShelf) => {
     BooksAPI.update(book, newShelf).then(() => {
-      setBooks(
-        books.map((b) => {
-          if (b.id === book.id) {
-            return { ...b, shelf: newShelf };
-          }
-          return b;
-        })
-      );
+      // 서재의 books 상태 업데이트
+      const newBooksState = books.map((b) => {
+        if (b.id === book.id) {
+          return { ...b, shelf: newShelf };
+        }
+        return b;
+      });
+      setBooks(newBooksState);
     });
   };
 
@@ -41,6 +41,7 @@ function App() {
           setShowSearchpage={setShowSearchpage}
           updateShelf={updateShelf}
           books={books}
+          setBooks={setBooks}
         />
       ) : (
         <div className="list-books">
