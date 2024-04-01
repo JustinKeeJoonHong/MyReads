@@ -11,6 +11,18 @@ const SearchBook = ({
   const [query, setQuery] = useState("");
   const [showingBooks, setShowingBooks] = useState([]);
 
+  const updateSearchedBook = (book, newShelf) => {
+    BooksAPI.update(book, newShelf).then(() => {
+      const newShowingBooks = showingBooks.map((b) => {
+        if (b.id === book.id) {
+          return { ...b, shelf: newShelf };
+        }
+        return b;
+      });
+      setShowingBooks(newShowingBooks);
+    });
+  };
+
   useEffect(() => {
     let active = true;
 
@@ -81,7 +93,10 @@ const SearchBook = ({
                       })`,
                     }}
                   ></div>
-                  <BookShelfChanger book={book} updateShelf={updateShelf} />
+                  <BookShelfChanger
+                    book={book}
+                    updateShelf={updateSearchedBook}
+                  />
                 </div>
                 <div className="book-title">{book.title}</div>
                 <div className="book-authors">{book.authors}</div>
