@@ -1,20 +1,19 @@
 const BookShelfChanger = ({ book, updateShelf }) => {
-  const handleClick = () => {
-    console.log(book);
-  };
+  const isShelfNoneOrUndefined = !book.shelf || book.shelf === "none";
+
   return (
-    <div className="book-shelf-changer" onClick={handleClick}>
+    <div className="book-shelf-changer">
       <select
         onChange={(event) => updateShelf(book, event.target.value)}
         value={book.shelf || "none"}
       >
         <option value="none" disabled>
-          {book.shelf ? "Move to.." : "Add to .."}
+          {!isShelfNoneOrUndefined ? "Move to.." : "Add to .."}
         </option>
         <option value="currentlyReading">Currently Reading</option>
         <option value="wantToRead">Want to Read</option>
         <option value="read">Read</option>
-        {book.shelf && <option value="none">None</option>}
+        {!isShelfNoneOrUndefined && <option value="none">None</option>}
       </select>
     </div>
   );
