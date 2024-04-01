@@ -1,4 +1,6 @@
-const CurrentlyReading = ({ books }) => {
+import { update } from "./BooksAPI";
+
+const CurrentlyReading = ({ books, updateShelf }) => {
   // currentlyReading
   return (
     <div className="bookshelf">
@@ -23,7 +25,12 @@ const CurrentlyReading = ({ books }) => {
                       }}
                     ></div>
                     <div className="book-shelf-changer">
-                      <select>
+                      <select
+                        onChange={(event) =>
+                          updateShelf(book, event.target.value)
+                        }
+                        value={book.shelf}
+                      >
                         <option value="none" disabled>
                           Move to...
                         </option>
