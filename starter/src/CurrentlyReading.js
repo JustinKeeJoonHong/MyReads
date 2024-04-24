@@ -1,4 +1,3 @@
-import { update } from "./BooksAPI";
 import BookShelfChanger from "./BookShelfChanger";
 
 const CurrentlyReading = ({ books, updateShelf }) => {
