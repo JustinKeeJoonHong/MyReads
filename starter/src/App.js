@@ -4,7 +4,7 @@ import CurrentlyReading from "./\bCurrentlyReading";
 import WantToRead from "./WantToRead";
 import Read from "./Read";
 import SearchBook from "./SearchBook";
-import * as BooksAPI from "/Users/hong-gijun/Desktop/MyReads/starter/src/BooksAPI";
+import * as BooksAPI from "./BooksAPI";
 
 function App() {
   const [showSearchPage, setShowSearchpage] = useState(false);
